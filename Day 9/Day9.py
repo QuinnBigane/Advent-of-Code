@@ -3,7 +3,7 @@ class Rope:
     def __init__(self):
         self.head = Head()
         self.tails = []
-        for x in range(12):
+        for x in range(9):
             self.tails.append(Tail())
     def process(self, direction):
         if(direction == 'R'):
@@ -35,8 +35,8 @@ class Rope:
 
 class Head:
     def __init__(self):
-        self.x = 10000
-        self.y = 10000
+        self.x = 5000
+        self.y = 5000
     def process_right(self):
         self.x +=1
     def process_left(self):
@@ -47,9 +47,10 @@ class Head:
         self.y -=1
 class Tail:
     def __init__(self):
-        self.x = 10000
-        self.y = 10000
-        self.set =[[0]*20000 for i in range(20000)]
+        self.x = 5000
+        self.y = 5000
+        self.set =[[0]*10000 for i in range(10000)]
+        self.set[self.x][self.y] = 1
         self.running_total = 1
     def check(self):
         if self.set[self.x][self.y] == 0:
@@ -119,4 +120,3 @@ print(rope.tails[5].running_total)
 print(rope.tails[6].running_total)
 print(rope.tails[7].running_total)
 print(rope.tails[8].running_total)
-print(rope.tails[9].running_total)

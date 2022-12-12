@@ -1,5 +1,5 @@
 f = open("C:\\Directory\\Advent-of-Code-2022\\Day 12\input.txt", "r")
-
+import numpy as np
 dict = {'a':1,
 'b':2,
 'c':3,
@@ -33,7 +33,7 @@ dict = {'a':1,
 class Map:
     def __init__(self):
         self.map = []
-
+        
         self.start_row = 0
         self.start_column = 0
         self.end_row = 0
@@ -56,66 +56,23 @@ class Map:
 
     def get_cost(cur_node, next_node):
         if dict[cur_node] + 1 < dict[next_node]:
-            return 100000
+            return 1000000
         else:
             return 1
 
-def main():
-    test = main_helper(start_row, start_column, 0, 0)
-    print(test)
+    def dijkstra(self):
+        self.cost_map = []
+        for row in self.map:
+            self.cost_map.append([])
+            for vertice in row:
+                if vertice == 'S':
+                    self.cost_map[row].append(0)
+                else:
+                    self.cost_map[row].append(1000000)
+            row += 1
+        
+        for row in self.map:
+            for column in row:
+                self.cost_map
 
-def main_helper(row, column, steps, prev_val):
-    if(prev_val + 1 < dict[map[row][column]]):
-        return 0
-    if(map[row][column] == 'E'):
-        return steps
-    if steps > 500: 
-        return 0
-    cur_val = dict[map[row][column]]
-    output1 =0
-    output2 =0
-    output3 =0
-    output4 =0
-    if row == 0 and 161 >column > 0:
-        output1 = main_helper(row, column - 1 , steps + 1, cur_val)
-        output2 = main_helper(row, column + 1 , steps + 1, cur_val)
-        output3 = main_helper(row + 1, column , steps + 1, cur_val)
-    elif row == 40 and 161 > column > 0:
-        output1 =main_helper(row, column - 1 , steps + 1, cur_val)
-        output2 =main_helper(row, column + 1 , steps + 1, cur_val)
-        output3 =main_helper(row - 1, column , steps + 1, cur_val)
-    elif column == 0 and 40 > row > 0:
-        output1 =main_helper(row + 1, column , steps + 1, cur_val)
-        output2 =main_helper(row, column + 1 , steps + 1, cur_val)
-        output3 =main_helper(row - 1, column , steps + 1, cur_val)
-    elif column == 161 and 40 > row > 0:
-        output1 =main_helper(row + 1, column , steps + 1, cur_val)
-        output2 =main_helper(row, column - 1 , steps + 1, cur_val)
-        output3 =main_helper(row - 1, column , steps + 1, cur_val)
-    elif row == 0 and column == 0:
-        output1 =main_helper(row, column + 1 , steps + 1, cur_val)
-        output2 =main_helper(row + 1, column , steps + 1, cur_val)
-    elif row == 40 and column == 0:
-        output1 =main_helper(row, column + 1 , steps + 1, cur_val)
-        output2 =main_helper(row - 1, column , steps + 1, cur_val)
-    elif column == 161 and row == 0:
-        output1 =main_helper(row + 1, column , steps + 1, cur_val)
-        output2 =main_helper(row, column - 1 , steps + 1, cur_val)
-    elif column == 161 and row == 40:
-        output1 =main_helper(row, column - 1 , steps + 1, cur_val)
-        output2 =main_helper(row - 1, column , steps + 1, cur_val)
-    else:
-        output1 =main_helper(row, column - 1 , steps + 1, cur_val)
-        output2 =main_helper(row, column + 1 , steps + 1, cur_val)
-        output3 =main_helper(row + 1, column , steps + 1, cur_val)
-        output4 =main_helper(row - 1, column , steps + 1, cur_val)
-
-
-  
-    my_list = [output1,output2,output3,output4]
-    if(output1 == 0 and output2 == 0 and output3 == 0 and output4 == 0):
-        return 0
-    else:
-        return min(number for number in my_list if number > 0)
-
-main()
+        print(self.cost_map[self.end_row][self.end_column])

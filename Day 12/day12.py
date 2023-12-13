@@ -9,51 +9,121 @@ lines = f.readlines()
 t = 1
 lines = test.readlines()
 
-def is_possible(sec, nums):
-    print("check", sec, nums)
-    if nums == []:
-        return 1
-    start_offsets = [0]
-    for i in range(1,len(nums)):
-        start_offsets.append(1 + int(nums[i-1]) + start_offsets[-1])
-    print("test", nums, start_offsets)
+#6598 too low
+# 8069 too high
+def get_offsets(sec_len, nums, starting_offset):
+    # print(len(nums), starting_offset, sec_len)
+    if len(nums) == 0:
+        return []
+    if int(nums[0]) > sec_len or starting_offset > sec_len:
+        return []
+    count = 0
+    offsets = []
+    cur_len = 0
+    offset = starting_offset + count
+    cur_len = offset 
+    for num_index in range(len(nums)):
+        cur_len += (1)
+        cur_len += int(nums[num_index])
+    cur_len -=1
+    while(cur_len <= sec_len):
+        offsets.append(offset) 
+        offset +=1
+        cur_len +=1
+        # count +=1
+        # cur_len += nums
+        # offset = starting_offset + count
+        # cur_len = offset 
+        # for num_index in range(len(nums)):
+        #     cur_len += (1)
+        #     cur_len += int(nums[num_index])
+        # cur_len -=1
+    main_response = []
+    # print(offsets, nums[0])
+    count = 0
+    # print(offsets)
+    for offset in offsets:
+        #if there are more numbers 
+        if len(nums) > 1:
+            answers = get_offsets(sec_len, nums[1:],offset+int(nums[0])+1)
+            # print(offset, nums[1:],offset+int(nums[0]), answers)
+            if answers != -1:
+                for answer in answers:
+                    main_response.append([offset] + answer)
+        else:
+            main_response.append([offset])
+        count +=1
 
-    offsets = [start_offsets]
-    offsets_to_move = []
-    for index in reversed(range(len(start_offsets))): #for every offset
-        offsets_to_move.insert(0, index)
-        for i in offsets_to_move:
-            count = 1
-            while(1):
-                test_offset = start_offsets[:i]
-                test_offset.append(start_offsets[i] + count)
-                while(i != len(nums) - 1):
-                    i+=1
-                    test_offset.append(test_offset[-1] + int(nums[i-1]) + 1)
-                # test_offset += start_offsets[i+1:]
-                count +=1
-                if test_offset[-1] + int(nums[-1]) > len(sec):
-                    break
-                else:
-                    offsets.append(test_offset)
-    print(offsets)
-        
-    return 1
+    # print(main_response)
+    return main_response
+
+def is_possible(secs, nums):
+    #
+    sec = secs[0]
+    # print("is_possible", sec, nums)
+
+    if nums == []:
+        if "#" not in sec:
+            # print("returned 1")
+            return 1
+        else:
+            # print("returned 0")
+            return 0
+
+    offsets = get_offsets(len(sec), nums, 0)
+
+
+    #convert offsets to a list
+    #print(offsets)
+    possible_count = 0
+    for offset in offsets:
+        l_sec = ""
+        for i in range(len(offset)):
+            count = offset[i] - len(l_sec)
+            while count > 0:
+                count -=1
+                l_sec += "."
+            count = int(nums[i])
+            while(count > 0):
+                l_sec += "#"
+                count -=1
+        while(len(l_sec) != len(sec)):
+            l_sec += "."
+        flag = 1
+        for i in range(len(sec)):
+            if sec[i] == '#' and l_sec[i] == '.':
+                flag = 0
+                break
+        possible_count += flag
+        # if flag:
+            # print(l_sec)
+    #         f2.write(l_sec + "\n")
+    # f2.write("\n")
+    # print("possible count: ",possible_count)
+    return possible_count
 
 def check_section(secs, nums):
+    # print("check",secs,nums)
     possibilites = 0
     if len(secs) == 0 and len(nums) > 0:
+        # print("returned 0")
         return 0
     if len(secs) == 0 and len(nums) == 0:
+        # print("returned 1")
         return 1
+    if len(nums) == 0:
+        if "#" not in secs[0]:
+            return check_section(secs[1:], nums)
+        else:
+            return 0
     if secs[0] == '':
-        print("hit")
+        #print("hit")
         #call check section on the next section
         return check_section(secs[1:], nums)
     
     cur_len = 0
     l_nums = nums
-    perm_list = [[]]
+    # perm_list = [[]]
 
     i = 0
     #get all possible numbers that can fit in current
@@ -63,32 +133,61 @@ def check_section(secs, nums):
         if cur_len > len(secs[0]):
             break
         i+=1
-        perm_list.append([])
-        for x in range(i):
-            perm_list[-1].append(l_nums[x])
+        # perm_list.append([])                     perm list doesnt matter
+        # for x in range(i):
+        #     perm_list[-1].append(l_nums[x])
         cur_len += 1
         #that's all the numbers!
         if i > len(nums) -1: 
             break
-    print(secs, nums,perm_list, i)
+    #print(secs, nums,perm_list, i)
+    
+    #start index
+    start_index = i
+    #get the minimum index left we need
+    end_index = 0
+    remaining_len = 0
+    for sec in secs[1:]:
+        remaining_len+= len(sec)
+    print(secs[0])
+    print(remaining_len)
+    for x in range(start_index+1):
+        c_len = 0
+        for num in nums[x:]:
+            c_len += int(num)
+        print(nums[x:],c_len)
+        if c_len > remaining_len:
+            end_index+=1
+    print(end_index, start_index)
     total = 0
-    for x in range(i+1):
-        my_answer = is_possible(secs[0], nums[:x])
+    other_answer = 0
+    for x in range(end_index,start_index+1):
+        print(x)
+        my_answer = is_possible(secs, nums[:x])
         if my_answer > 0:
+            # print(nums)
+            # print("checking deeper w/ ", nums[x:])
             other_answer = check_section(secs[1:], nums[x:])
-        
+        # f2.write(str(my_answer) + " x " + str(other_answer) + "\n")
         #compute how many permutation this using I numbers can get in this section (myanswer)
+        #print("check returned: ",other_answer * my_answer, other_answer,my_answer )
         total += (other_answer * my_answer)
+        # print("running total ", total)
     return total
         
 
+total = 0
 
 new_lines = []
 for line in lines:
     new_lines.append("")
     toks = line.strip().split()
-    row = toks[0].split(".")
-    numbers = toks[1].split(",")
+    row = (toks[0] + "?" +toks[0] + "?" +toks[0] + "?" +toks[0] + "?" +toks[0]).split(".")
+    f2.write(str(row) + "\n")
+    #row = toks[0].split(".")
+    numbers = toks[1].split(",") + toks[1].split(",") +toks[1].split(",") +toks[1].split(",") +toks[1].split(",")
+    # numbers = toks[1].split(",")
+    f2.write(str(numbers) + "\n\n")
     max_leng = 0
 
     #starting from every section in the row, check section 
@@ -96,8 +195,19 @@ for line in lines:
     for section in row:
         if section != '':
             new_row.append(section)
+    
+    # f2.write(line)
+    answer = check_section(new_row, numbers)
+    print(new_row,answer)
+    # f2.write(str(answer) + "\n\n\n")
 
-    check_section(new_row, numbers)
-    print("\n")
+    total +=answer
+    if answer == 0:
+        print("wrong")
+        break
     # max_leng = len(section)
-    f2.write(new_lines[-1])
+    
+
+print("total ", total)
+if t:
+    print(0 == (total - 525152))

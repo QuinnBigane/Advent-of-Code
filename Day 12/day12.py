@@ -13,6 +13,7 @@ lines = test.readlines()
 # 8069 too high
 def get_offsets(sec_len, nums, starting_offset):
     # print(len(nums), starting_offset, sec_len)
+    # print("get_offsets",nums)
     if len(nums) == 0:
         return []
     if int(nums[0]) > sec_len or starting_offset > sec_len:
@@ -60,7 +61,7 @@ def get_offsets(sec_len, nums, starting_offset):
 def is_possible(secs, nums):
     #
     sec = secs[0]
-    # print("is_possible", sec, nums)
+    print("is_possible", sec, nums)
 
     if nums == []:
         if "#" not in sec:
@@ -74,7 +75,7 @@ def is_possible(secs, nums):
 
 
     #convert offsets to a list
-    #print(offsets)
+    print("offsets done")
     possible_count = 0
     for offset in offsets:
         l_sec = ""
@@ -143,26 +144,46 @@ def check_section(secs, nums):
     #print(secs, nums,perm_list, i)
     
     #start index
-    start_index = i
+    e_index = i
     #get the minimum index left we need
-    end_index = 0
+    s_index = 0
     remaining_len = 0
     for sec in secs[1:]:
         remaining_len+= len(sec)
-    print(secs[0])
-    print(remaining_len)
-    for x in range(start_index+1):
+
+    s_index = 0 
+    while(1):
         c_len = 0
-        for num in nums[x:]:
+        for num in nums[s_index:]:
             c_len += int(num)
-        print(nums[x:],c_len)
-        if c_len > remaining_len:
-            end_index+=1
-    print(end_index, start_index)
+        if c_len < remaining_len:
+            break
+        else:
+            s_index+=1
+        if s_index > e_index:
+            s_index == e_index
+            break
+    if s_index > 0:
+        s_index -=1
+    total_remaining_nums = 0
+    for num in nums:
+        total_remaining_nums += int(num)
+    print(secs[0] , secs)
+    print(remaining_len, nums, total_remaining_nums)
+    # for x in reversed(range(e_index+1):
+    #     c_len = 0
+    #     for num in nums[x:]:
+    #         c_len += int(num)
+    #     #print(nums[x:],c_len)
+    #     if c_len > remaining_len:
+    #         s_index+=1
+    print(s_index, e_index)
     total = 0
     other_answer = 0
-    for x in range(end_index,start_index+1):
-        print(x)
+    for x in range(s_index,e_index+1):
+        print("I am considering", nums[:x])
+
+    for x in range(s_index,e_index+1):
         my_answer = is_possible(secs, nums[:x])
         if my_answer > 0:
             # print(nums)
@@ -198,6 +219,7 @@ for line in lines:
     
     # f2.write(line)
     answer = check_section(new_row, numbers)
+    print("---------------------------")
     print(new_row,answer)
     # f2.write(str(answer) + "\n\n\n")
 

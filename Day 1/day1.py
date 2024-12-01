@@ -103,3 +103,7 @@ for line in lines:
     cal_point = str(first) + str(last)
     total += int(cal_point)
 print(total)
+
+
+test = 'abs'
+print(test[0:1])

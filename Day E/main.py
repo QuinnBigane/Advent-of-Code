@@ -1,0 +1,32 @@
+from pathlib import Path
+
+def part1(f):
+    f.seek(0)
+    lines = f.readlines()
+    
+    return None
+
+def part2(f):
+    f.seek(0)
+    lines = f.readlines()
+
+    return None
+
+
+if __name__ == "__main__":
+    test_file = open(str(Path(__file__).parent) + '\\input_test.txt', "r")
+    input_file = open(str(Path(__file__).parent) + '\\input.txt', "r")
+    
+    part_1_test = part1(test_file)
+    part_2_test = part2(test_file)
+    part_1_input = part1(input_file)
+    part_2_input = part2(input_file)
+
+
+    print("--- Test File Results ---")
+    print("Part 1:", part_1_test)
+    print("Part 1:", part_2_test)
+
+    print("--- Input File Results ---")
+    print("Part 1:", part_1_input)
+    print("Part 1:", part_2_input)

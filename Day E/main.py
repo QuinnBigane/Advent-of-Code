@@ -10,7 +10,7 @@ def part1(f):
 def part2(f):
     f.seek(0)
     lines = f.readlines()
-
+    
     return None
 
 
@@ -38,8 +38,8 @@ if __name__ == "__main__":
 
     print("--- Test File Results ---")
     print("Part 1:", part_1_test, "Runtime:", f"{p1_test_end - p1_test_start:.6f}"+"s")
-    print("Part 1:", part_2_test, "Runtime:", f"{p2_test_start - p2_test_start:.6f}"+"s")
+    print("Part 2:", part_2_test, "Runtime:", f"{p2_test_start - p2_test_start:.6f}"+"s")
 
     print("--- Input File Results ---")
     print("Part 1:", part_1_input, "Runtime:", f"{p1_end - p1_start:.6f}"+"s")
-    print("Part 1:", part_2_input, "Runtime:", f"{p2_end - p2_start:.6f}"+"s")
+    print("Part 2:", part_2_input, "Runtime:", f"{p2_end - p2_start:.6f}"+"s")

@@ -1,6 +1,8 @@
 from pathlib import Path
 import time
 import re
+import itertools
+
 
 def part1(f):
     f.seek(0)

@@ -1,5 +1,6 @@
 from pathlib import Path
 import time
+import re
 
 def part1(f):
     f.seek(0)

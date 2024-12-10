@@ -98,8 +98,8 @@ def part2(f):
     #prev_s_i2 = 0  #can't use b/c may not fill all mem
     first_empty_mem = 0
     for cur_id in reversed(range(last_id+1)):
-        if (cur_id / (last_id + 1) * 100) % 10 == 0:
-            print((cur_id / (last_id + 1) * 100))
+        # if (cur_id / (last_id + 1) * 100) % 10 == 0:
+        #     print((cur_id / (last_id + 1) * 100))
         cur_len = 0
         s_i1 = None
         s_i2 = None
@@ -113,6 +113,8 @@ def part2(f):
             if (cur_len > 0 and str(expanded_file[i1].id) != str(cur_id)):
                 s_i1 = i1 + 1
                 break
+        
+        # should have created a dict of empty mem space, tracking indexes of nearest memory space avaiable given a certain length
         new_first_empty_mem = None
         for i2 in range(first_empty_mem, len(expanded_file[:s_i1])):
             if new_first_empty_mem == None and expanded_file[i2].id == '.':

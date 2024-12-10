@@ -21,21 +21,21 @@ if __name__ == "__main__":
     test_file = open(str(Path(__file__).parent) + '\\input_test.txt', "r")
     input_file = open(str(Path(__file__).parent) + '\\input.txt', "r")
     
-    p1_test_start = time.time()
+    p1_test_start = time.perf_counter()
     part_1_test = part1(test_file)
-    p1_test_end = time.time()
+    p1_test_end = time.perf_counter()
 
-    p2_test_start = time.time()
+    p2_test_start = time.perf_counter()
     part_2_test = part2(test_file)
-    p2_test_end = time.time()
+    p2_test_end = time.perf_counter()
 
-    p1_start = time.time()
+    p1_start = time.perf_counter()
     part_1_input = part1(input_file)
-    p1_end = time.time()
+    p1_end = time.perf_counter()
 
-    p2_start = time.time()
+    p2_start = time.perf_counter()
     part_2_input = part2(input_file)
-    p2_end = time.time()
+    p2_end = time.perf_counter()
 
 
 

@@ -115,7 +115,7 @@ def part2(f):
                 break
         new_first_empty_mem = None
         for i2 in range(first_empty_mem, len(expanded_file[:s_i1])):
-            if new_first_empty_mem == None and expanded_file[i2] == '.':
+            if new_first_empty_mem == None and expanded_file[i2].id == '.':
                 new_first_empty_mem = i2
             viable = True
             for offset in range(cur_len):
